@@ -1,0 +1,46 @@
+{
+  "author": "karma1911",
+  "bugs": {
+    "url": "https://github.com/karma1911/orbitkit/issues"
+  },
+  "description": "A collection of loading indicators animated with CSS \u2014 dependency-free, themeable, accessible",
+  "devDependencies": {
+    "stylelint": "^16.0.0",
+    "stylelint-config-standard": "^36.0.0"
+  },
+  "exports": {
+    ".": "./dist/orbitkit.css",
+    "./min": "./dist/orbitkit.min.css",
+    "./package.json": "./package.json",
+    "./spinners/*": "./src/spinners/*.css"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://github.com/karma1911/orbitkit",
+  "keywords": [
+    "css",
+    "loader",
+    "spinner",
+    "loading",
+    "animation",
+    "ui"
+  ],
+  "license": "MIT",
+  "main": "dist/orbitkit.css",
+  "name": "orbitkit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karma1911/orbitkit.git"
+  },
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "lint": "npx --yes stylelint \"src/**/*.css\""
+  },
+  "sideEffects": false,
+  "style": "dist/orbitkit.css",
+  "version": "0.1.0"
+}

@@ -1,0 +1,21 @@
+/* ============================================================
+   OrbitKit — ring
+   A classic two-tone arc spinner.
+
+   <div class="ok-ring"></div>
+   ============================================================ */
+.ok-ring {
+  width: var(--ok-size, 48px);
+  height: var(--ok-size, 48px);
+  border-radius: 50%;
+  border: max(3px, calc(var(--ok-size, 48px) / 12)) solid transparent;
+  border-top-color: var(--ok-color, #6366f1);
+  border-right-color: var(--ok-color, #6366f1);
+  animation: ok-ring-spin var(--ok-speed, 0.9s) linear infinite;
+}
+
+@keyframes ok-ring-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

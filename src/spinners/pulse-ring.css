@@ -1,0 +1,36 @@
+/* ============================================================
+   OrbitKit — pulse-ring
+   Radar-style expanding rings.
+
+   <div class="ok-pulse-ring"></div>
+   ============================================================ */
+.ok-pulse-ring {
+  width: var(--ok-size, 48px);
+  height: var(--ok-size, 48px);
+  position: relative;
+}
+
+.ok-pulse-ring::before,
+.ok-pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: max(2px, calc(var(--ok-size, 48px) / 16)) solid var(--ok-color, #6366f1);
+  animation: ok-pulse-ring-expand var(--ok-speed, 1.8s) cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+.ok-pulse-ring::after {
+  animation-delay: calc(var(--ok-speed, 1.8s) / -2);
+}
+
+@keyframes ok-pulse-ring-expand {
+  from {
+    transform: scale(0.25);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}

@@ -1,0 +1,47 @@
+/* ============================================================
+   OrbitKit — comet
+   A bright head with a fading trail, circling endlessly.
+
+   <div class="ok-comet">
+     <span></span><span></span><span></span><span></span>
+     <span></span><span></span><span></span><span></span>
+   </div>
+   ============================================================ */
+.ok-comet {
+  width: var(--ok-size, 48px);
+  height: var(--ok-size, 48px);
+  position: relative;
+  animation: ok-comet-spin var(--ok-speed, 1.2s) linear infinite;
+}
+
+.ok-comet > span {
+  position: absolute;
+  inset: 0;
+}
+
+.ok-comet > span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 15%;
+  aspect-ratio: 1;
+  margin-left: -7.5%;
+  border-radius: 50%;
+  background: var(--ok-color, #6366f1);
+}
+
+.ok-comet > span:nth-child(1) { transform: rotate(0deg); opacity: 1; }
+.ok-comet > span:nth-child(2) { transform: rotate(-45deg); opacity: 0.8; }
+.ok-comet > span:nth-child(3) { transform: rotate(-90deg); opacity: 0.62; }
+.ok-comet > span:nth-child(4) { transform: rotate(-135deg); opacity: 0.46; }
+.ok-comet > span:nth-child(5) { transform: rotate(-180deg); opacity: 0.32; }
+.ok-comet > span:nth-child(6) { transform: rotate(-225deg); opacity: 0.21; }
+.ok-comet > span:nth-child(7) { transform: rotate(-270deg); opacity: 0.12; }
+.ok-comet > span:nth-child(8) { transform: rotate(-315deg); opacity: 0.06; }
+
+@keyframes ok-comet-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

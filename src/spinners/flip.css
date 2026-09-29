@@ -1,0 +1,25 @@
+/* ============================================================
+   OrbitKit — flip
+   A square flipping in 3D, like a coin toss.
+
+   <div class="ok-flip"></div>
+   ============================================================ */
+.ok-flip {
+  width: var(--ok-size, 48px);
+  height: var(--ok-size, 48px);
+  background: var(--ok-color, #6366f1);
+  border-radius: 12%;
+  animation: ok-flip-toss var(--ok-speed, 1.6s) cubic-bezier(0.4, 0.1, 0.3, 1) infinite;
+}
+
+@keyframes ok-flip-toss {
+  0% {
+    transform: perspective(160px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(160px) rotateY(180deg);
+  }
+  100% {
+    transform: perspective(160px) rotateY(360deg);
+  }
+}

@@ -1,0 +1,22 @@
+/* ============================================================
+   OrbitKit — base
+   Shared variables, utilities and accessibility defaults.
+   Every spinner is self-contained: overriding --ok-size,
+   --ok-color or --ok-speed on any element only affects
+   the spinners inside it.
+   ============================================================ */
+
+/* Center a spinner horizontally */
+.ok-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Respect users who prefer reduced motion: slow every
+   OrbitKit animation down instead of removing it, so a
+   loading state is still communicated. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ok-speed: 3s;
+  }
+}

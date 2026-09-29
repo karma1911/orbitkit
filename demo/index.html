@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OrbitKit — CSS Loading Indicators</title>
+<link rel="stylesheet" href="../dist/orbitkit.css">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1e1b2e;
+    --muted: #6b6a7a;
+    --card: #f6f5fb;
+    --border: #e6e3f2;
+    --accent: #6366f1;
+  }
+  [data-theme="dark"] {
+    --bg: #14131c;
+    --fg: #f0effa;
+    --muted: #a3a1b8;
+    --card: #1d1c28;
+    --border: #2e2c40;
+    --accent: #818cf8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    transition: background 0.25s, color 0.25s;
+  }
+  header {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 56px 24px 8px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.6rem; margin: 0 0 8px; letter-spacing: -0.02em; }
+  header h1 .dot { color: var(--accent); }
+  header p { color: var(--muted); margin: 0 0 28px; font-size: 1.05rem; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 28px;
+    justify-content: center;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 24px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .controls label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .controls input[type="range"] { accent-color: var(--accent); width: 130px; }
+  .controls input[type="color"] {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 44px;
+    height: 30px;
+    padding: 2px;
+    background: var(--bg);
+    cursor: pointer;
+  }
+  .controls button {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .controls button:hover { border-color: var(--accent); }
+  #stage { --ok-size: 56px; --ok-color: #6366f1; }
+  main {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 32px 24px 80px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .preview {
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+  .card footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 6px 2px;
+  }
+  .card footer code { font-size: 0.95rem; font-weight: 600; }
+  .card footer button {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--fg);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+  }
+  .card footer button:hover { border-color: var(--accent); color: var(--accent); }
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--fg);
+    color: var(--bg);
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.25s, transform 0.25s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div id="stage">
+<header>
+  <h1>OrbitKit<span class="dot">.</span></h1>
+  <p>12 original loading indicators, animated with pure CSS. Zero dependencies.</p>
+  <div class="controls">
+    <label>Size <input type="range" id="size" min="24" max="120" value="56"></label>
+    <label>Color <input type="color" id="color" value="#6366f1"></label>
+    <label>Speed <input type="range" id="speed" min="4" max="30" value="10"></label>
+    <button id="theme" type="button">Dark mode</button>
+  </div>
+</header>
+<main id="grid"></main>
+</div>
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+const SPINNERS = [
+  { name: "orbit",      html: '<div class="ok-orbit"></div>' },
+  { name: "ring",       html: '<div class="ok-ring"></div>' },
+  { name: "dual-ring",  html: '<div class="ok-dual-ring"></div>' },
+  { name: "pulse-ring", html: '<div class="ok-pulse-ring"></div>' },
+  { name: "comet",      html: '<div class="ok-comet">' + "<span></span>".repeat(8) + "</div>" },
+  { name: "bars",       html: '<div class="ok-bars">' + "<span></span>".repeat(5) + "</div>" },
+  { name: "dots",       html: '<div class="ok-dots">' + "<span></span>".repeat(3) + "</div>" },
+  { name: "typing",     html: '<div class="ok-typing">' + "<span></span>".repeat(3) + "</div>" },
+  { name: "grid",       html: '<div class="ok-grid">' + "<span></span>".repeat(9) + "</div>" },
+  { name: "morph",      html: '<div class="ok-morph"></div>' },
+  { name: "flip",       html: '<div class="ok-flip"></div>' },
+  { name: "progress",   html: '<div class="ok-progress"><span></span></div>' },
+];
+
+const grid = document.getElementById("grid");
+const toast = document.getElementById("toast");
+let toastTimer;
+
+for (const s of SPINNERS) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.innerHTML =
+    '<div class="preview">' + s.html + "</div>" +
+    "<footer><code>ok-" + s.name + "</code><button type=\"button\">Copy HTML</button></footer>";
+  card.querySelector("button").addEventListener("click", async (e) => {
+    await navigator.clipboard.writeText(s.html);
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1400);
+  });
+  grid.appendChild(card);
+}
+
+const stage = document.getElementById("stage");
+document.getElementById("size").addEventListener("input", (e) => {
+  stage.style.setProperty("--ok-size", e.target.value + "px");
+});
+document.getElementById("color").addEventListener("input", (e) => {
+  stage.style.setProperty("--ok-color", e.target.value);
+});
+document.getElementById("speed").addEventListener("input", (e) => {
+  // slider 4..30 -> speed multiplier 2.5x .. 0.33x (higher = faster)
+  const mult = 10 / e.target.value;
+  stage.style.setProperty("--ok-speed", mult.toFixed(2) + "s");
+});
+document.getElementById("theme").addEventListener("click", (e) => {
+  const dark = document.documentElement.dataset.theme === "dark";
+  document.documentElement.dataset.theme = dark ? "" : "dark";
+  e.target.textContent = dark ? "Dark mode" : "Light mode";
+});
+</script>
+</body>
+</html>

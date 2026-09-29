@@ -1,0 +1,21 @@
+/* ============================================================
+   OrbitKit v0.1.0
+   A collection of loading indicators animated with CSS.
+   https://github.com/karma1911/orbitkit
+
+   Usage: import this file, or import individual spinners
+   from src/spinners/ for a smaller bundle.
+   ============================================================ */
+@import "./spinners/_base.css";
+@import "./spinners/orbit.css";
+@import "./spinners/ring.css";
+@import "./spinners/dual-ring.css";
+@import "./spinners/pulse-ring.css";
+@import "./spinners/comet.css";
+@import "./spinners/bars.css";
+@import "./spinners/dots.css";
+@import "./spinners/typing.css";
+@import "./spinners/grid.css";
+@import "./spinners/morph.css";
+@import "./spinners/flip.css";
+@import "./spinners/progress.css";

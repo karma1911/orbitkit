@@ -1,0 +1,42 @@
+/* ============================================================
+   OrbitKit — progress
+   An indeterminate bar sliding across its track.
+
+   <div class="ok-progress"><span></span></div>
+   ============================================================ */
+.ok-progress {
+  width: calc(var(--ok-size, 48px) * 3.2);
+  height: max(4px, calc(var(--ok-size, 48px) / 9));
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+}
+
+.ok-progress::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--ok-color, #6366f1);
+  opacity: 0.22;
+}
+
+.ok-progress > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 38%;
+  border-radius: 999px;
+  background: var(--ok-color, #6366f1);
+  animation: ok-progress-slide var(--ok-speed, 1.4s) ease-in-out infinite;
+}
+
+@keyframes ok-progress-slide {
+  0% {
+    transform: translateX(-110%);
+  }
+  100% {
+    transform: translateX(280%);
+  }
+}

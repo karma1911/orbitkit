@@ -1,0 +1,44 @@
+/* ============================================================
+   OrbitKit — dual-ring
+   Two arcs spinning in opposite directions.
+
+   <div class="ok-dual-ring"></div>
+   ============================================================ */
+.ok-dual-ring {
+  width: var(--ok-size, 48px);
+  height: var(--ok-size, 48px);
+  position: relative;
+}
+
+.ok-dual-ring::before,
+.ok-dual-ring::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border: max(3px, calc(var(--ok-size, 48px) / 14)) solid transparent;
+}
+
+.ok-dual-ring::before {
+  inset: 0;
+  border-top-color: var(--ok-color, #6366f1);
+  animation: ok-dual-ring-cw var(--ok-speed, 1.1s) linear infinite;
+}
+
+.ok-dual-ring::after {
+  inset: 20%;
+  border-bottom-color: var(--ok-color, #6366f1);
+  opacity: 0.55;
+  animation: ok-dual-ring-ccw var(--ok-speed, 1.1s) linear infinite;
+}
+
+@keyframes ok-dual-ring-cw {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes ok-dual-ring-ccw {
+  to {
+    transform: rotate(-1turn);
+  }
+}

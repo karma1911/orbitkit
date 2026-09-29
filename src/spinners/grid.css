@@ -1,0 +1,46 @@
+/* ============================================================
+   OrbitKit — grid
+   A 3x3 grid of squares rippling diagonally.
+
+   <div class="ok-grid">
+     <span></span><span></span><span></span>
+     <span></span><span></span><span></span>
+     <span></span><span></span><span></span>
+   </div>
+   ============================================================ */
+.ok-grid {
+  width: var(--ok-size, 48px);
+  height: var(--ok-size, 48px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12%;
+}
+
+.ok-grid > span {
+  aspect-ratio: 1;
+  border-radius: 22%;
+  background: var(--ok-color, #6366f1);
+  animation: ok-grid-ripple var(--ok-speed, 1.3s) ease-in-out infinite;
+}
+
+.ok-grid > span:nth-child(1) { animation-delay: 0s; }
+.ok-grid > span:nth-child(2) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 1); }
+.ok-grid > span:nth-child(3) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 2); }
+.ok-grid > span:nth-child(4) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 1); }
+.ok-grid > span:nth-child(5) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 2); }
+.ok-grid > span:nth-child(6) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 3); }
+.ok-grid > span:nth-child(7) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 2); }
+.ok-grid > span:nth-child(8) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 3); }
+.ok-grid > span:nth-child(9) { animation-delay: calc(var(--ok-speed, 1.3s) / -13 * 4)); }
+
+@keyframes ok-grid-ripple {
+  0%,
+  100% {
+    transform: scale(0.55);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
